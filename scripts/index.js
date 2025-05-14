@@ -4,41 +4,47 @@
 
 // @todo: Функция создания карточки
 
+// @todo: Функция удаления карточки
+
+// @todo: Вывести карточки на страницу
+
+// @todo: Функция удаления карточки
+
+// @todo: Вывести карточки на страницу
+
 function createCard(cardsItem, cardDelete) {
 
-  const cardTemplate = document.getElementById("card-template").content.cloneNode(true);
+  const cardTemplate = document.getElementById("card-template");
+  const cardElement = cardTemplate.content.querySelector(".card").cloneNode(true);
 
-  cardTemplate.querySelector(".card__title").textContent = cardsItem.name;
-  const cardImage = cardTemplate.querySelector(".card__image");
+
+  cardElement.querySelector(".card__title").textContent = cardsItem.name;
+  const cardImage = cardElement.querySelector(".card__image");
   cardImage.src = cardsItem.link;
+  cardImage.alt = `Изображение ${cardsItem.name}`;
 
-  const deleteButton = cardTemplate.querySelector(".card__delete-button");
+  const deleteButton = cardElement.querySelector(".card__delete-button");
   deleteButton.addEventListener("click", () => {
-    cardDelete(cardsItem);
+    cardDelete(cardElement);
   });
 
-  return cardTemplate;
+  return cardElement;
 }
 
 function renderCards(initialCards) {
   const cardsContainer = document.querySelector(".places__list");
 
-  cardsContainer.textContent = "";
+  cardsContainer.replaceChildren();
 
   initialCards.forEach((item) => {
-    const cardsElement = createCard(item, cardDelete);
-    cardsContainer.append(cardsElement);
+    const cardElement = createCard(item, cardDelete);
+    cardsContainer.append(cardElement);
   });
 }
 
-// @todo: Функция удаления карточки
-function cardDelete(cardsItem) {
-  const index = initialCards.indexOf(cardsItem);
-  if (index > -1) {
-    initialCards.splice(index, 1);
-    renderCards(initialCards);
-  }
+function cardDelete(cardElement) {
+  cardElement.remove();
 }
 
-// @todo: Вывести карточки на страницу
 renderCards(initialCards);
+
