@@ -11,8 +11,8 @@
 // @todo: Функция удаления карточки
 
 // @todo: Вывести карточки на страницу
-import './styles/index.css';
-
+import '../styles/index.css';
+import'./cards.js';
 function createCard(cardsItem, cardDelete) {
   const cardTemplate = document.getElementById("card-template");
   const cardElement = cardTemplate.content
