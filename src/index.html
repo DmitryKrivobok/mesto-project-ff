@@ -8,9 +8,7 @@
     />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Mesto</title>
-    <!--<link rel="stylesheet" href="./pages/index.css" />
-    <script src="./scripts/cards.js" defer></script>
-    <script src="./scripts/index.js" defer></script>-->
+    
   </head>
   <body class="page">
     <div class="page__content">
@@ -41,7 +39,7 @@
       <footer class="footer page__section">
         <p class="footer__copyright">© 2021 Mesto Russia</p>
       </footer>
-      <div class="popup popup_type_edit">
+      <div class="popup popup_type_edit popup_is-animated">
         <div class="popup__content">
           <button type="button" class="popup__close"></button>
           <h3 class="popup__title">Редактировать профиль</h3>
@@ -50,14 +48,14 @@
               type="text"
               name="name"
               class="popup__input popup__input_type_name"
-              placeholder="Имя"
+              placeholder="Жак-Ив Кусто"
               required
             />
             <input
               type="text"
               name="description"
               class="popup__input popup__input_type_description"
-              placeholder="Занятие"
+              placeholder="Исследователь океана"
               required
             />
             <button type="submit" class="button popup__button">
@@ -66,7 +64,7 @@
           </form>
         </div>
       </div>
-      <div class="popup popup_type_new-card">
+      <div class="popup popup_type_new-card popup_is-animated">
         <div class="popup__content">
           <button type="button" class="popup__close"></button>
           <h3 class="popup__title">Новое место</h3>
@@ -91,7 +89,7 @@
           </form>
         </div>
       </div>
-      <div class="popup popup_type_image">
+      <div class="popup popup_type_image popup_is-animated">
         <div class="popup__content popup__content_content_image">
           <button type="button" class="popup__close"></button>
           <img src="" alt="" class="popup__image">
