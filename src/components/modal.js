@@ -1,29 +1,29 @@
 export function openModal(popup) {
+  popup.addEventListener("click", (event) => {
+    if (
+      event.target.classList.contains("popup__close") ||
+      event.target.classList.contains("popup")
+    ) {
+      closeModal(popup);
+    }
+  });
   popup.classList.add("popup_is-opened");
-  document.addEventListener("keydown", closePopupEsc);
+  document.addEventListener("keydown", closeModalEsc);
 }
 
 export function closeModal(popup) {
   popup.classList.remove("popup_is-opened");
-  document.removeEventListener("keydown", closePopupEsc);
+  removeListeners(popup);
 }
 
-export function closeModalsc(event) {
+export function closeModalEsc(event) {
   if (event.key === "Escape") {
     const openPopup = document.querySelector(".popup_is-opened");
     closeModal(openPopup);
   }
 }
 
-export function showZoomImage(cardTitle, cardImage) {
-  const popupImage = document.querySelector(".popup_type_image");
-  const popupZoomImage = popupImage.querySelector(".popup__image");
-  const captionPopup = popupImage.querySelector(".popup__caption");
-  const imageUrl = cardImage.src;
-  const captionText = cardTitle.textContent;
-  const imageUrlAlt = cardImage.alt;
-  popupZoomImage.src = imageUrl;
-  popupZoomImage.alt = imageUrlAlt;
-  captionPopup.textContent = captionText;
-  openModal(popupImage);
+function removeListeners(popup) {
+  popup.removeEventListener("click", closeModal);
+  document.removeEventListener("keydown", closeModalEsc);
 }
