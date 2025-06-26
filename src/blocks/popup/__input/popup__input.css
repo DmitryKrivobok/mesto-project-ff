@@ -21,16 +21,6 @@
   }
 }
 
-.form__input_type_error {
-  border-bottom-color: 1px solid rgba(255, 0, 0, 1);
-}
 
-.form__input-error_active {
-  color: rgba(255, 0, 0, 1);
-  font-family: Inter;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 100%;
-}
 
   
