@@ -1,4 +1,4 @@
-import { deleteCard } from "./api";
+import { deleteCard, likeCard } from "./api";
 
 export function createCard(
   cardsItem,
@@ -32,10 +32,15 @@ export function createCard(
     cardDelete(cardElement, id);
   });
 
+ 
   const likeButton = cardElement.querySelector(".card__like-button");
   const likeCountElement = cardElement.querySelector(".like_count");
 
   likeCountElement.textContent = cardsItem.likes.length;
+
+  if (cardsItem.likes.some(user => user._id === userId)) {
+    likeButton.classList.add("card__like-button_is-active");
+  }
 
   likeButton.addEventListener("click", () => {
     showlikeCard(id, likeButton, likeCountElement);

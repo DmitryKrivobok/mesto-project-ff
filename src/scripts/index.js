@@ -39,8 +39,8 @@ const addCardButton = document.querySelector(".profile__add-button");
 const newCardName = formNewCardPopup.querySelector(".popup__input_type_card-name");
 const newCardUrl = formNewCardPopup.querySelector(".popup__input_type_url");
 
-const formElement = document.querySelector(".popup__form");
-const submitButton = formElement.querySelector(".popup__button");
+const popupForm = document.querySelector(".popup__form");
+const submitButton = popupForm.querySelector(".popup__button");
 
 let userId;
 
@@ -61,8 +61,7 @@ const validationConfig = {
 function handleFormEditProfile(evt) {
   evt.preventDefault();
 
-  submitButton.textContent = "Сохранение...";
-  submitButton.disabled = true;
+  setLoadingState(submitButton, true);
 
   const name = nameInput.value;
   const about = jobInput.value;
@@ -77,17 +76,18 @@ function handleFormEditProfile(evt) {
       console.error(error);
     })
     .finally(() => {
-      submitButton.textContent = "Сохранить";
-      submitButton.disabled = false;
+      setLoadingState(submitButton, false);
     });
 }
-formEditProfile.addEventListener("submit", handleFormEditProfile);
+formEditProfile.addEventListener("submit", (evt)=> {
+   handleFormEditProfile(evt);
+   formEditProfile.reset();
+  });
 
 function addNewCard(evt) {
   evt.preventDefault();
 
-  submitButton.textContent = "Сохранение...";
-  submitButton.disabled = true;
+  setLoadingState(submitButton, true);
 
   const newCardData = {
     name: newCardName.value,
@@ -114,11 +114,13 @@ function addNewCard(evt) {
       console.error(error);
     })
     .finally(() => {
-      submitButton.textContent = "Сохранить";
-      submitButton.disabled = false;
+      setLoadingState(submitButton, false);
     });
 }
-formNewCardPopup.addEventListener("submit", addNewCard);
+formNewCardPopup.addEventListener("submit", (evt) => {
+  addNewCard(evt);
+  formNewCardPopup.reset();
+});
 
 function showZoomImage(cardTitle, cardImage) {
   const imageUrl = cardImage.src;
@@ -135,8 +137,6 @@ editProfileButton.addEventListener("click", () => {
   jobInput.value = profileJob.textContent;
   clearValidation(popupEditProfile, validationConfig);
 
-  submitButton.classList.add(validationConfig.inactiveButtonClass);
-  submitButton.setAttribute("disabled", true);
   openModal(popupEditProfile);
 });
 
@@ -145,8 +145,6 @@ addCardButton.addEventListener("click", () => {
   newCardUrl.value = "";
   clearValidation(newCardPopup, validationConfig);
 
-  submitButton.classList.add(validationConfig.inactiveButtonClass);
-  submitButton.setAttribute("disabled", true);
   openModal(newCardPopup);
 });
 
@@ -219,8 +217,7 @@ profileImage.addEventListener("click", () => {
 function changeAvatar(evt) {
   evt.preventDefault();
 
-  submitButton.textContent = "Сохранение...";
-  submitButton.disabled = true;
+  setLoadingState(submitButton, true);
 
   const avatarUrl = avatarInput.value;
 
@@ -233,8 +230,19 @@ function changeAvatar(evt) {
       console.error(error);
     })
     .finally(() => {
-      submitButton.textContent = "Сохранить";
-      submitButton.disabled = false;
+      setLoadingState(submitButton, false);
     });
 }
 formEditAvatar.addEventListener("submit", changeAvatar);
+
+
+
+function setLoadingState(submitButton, isLoading) {
+  if (isLoading) {
+    submitButton.textContent = "Сохранeние...";
+      submitButton.disabled = false;
+  } else {
+    submitButton.textContent = "Сохранить";
+    submitButton.disabled = false;
+  }
+}
