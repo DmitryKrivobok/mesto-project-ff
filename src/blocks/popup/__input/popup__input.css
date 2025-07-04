@@ -21,6 +21,16 @@
   }
 }
 
+.popup__input_type_error {
+  border-bottom-color: rgba(255, 0, 0, 1);
+}
 
+.popup__input-error_active {
+  color: rgba(255, 0, 0, 1);
+  font-family: Inter;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 100%;
+}
 
   

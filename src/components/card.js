@@ -1,8 +1,18 @@
-export function createCard(cardsItem, cardDelete, showZoomImage) {
+import { deleteCard } from "./api";
+
+export function createCard(
+  cardsItem,
+  cardDelete,
+  showZoomImage,
+  userId,
+  showlikeCard
+) {
   const cardTemplate = document.getElementById("card-template");
   const cardElement = cardTemplate.content
     .querySelector(".card")
     .cloneNode(true);
+
+  cardElement.dataset.cardId = cardsItem._id;
 
   const cardTitle = cardElement.querySelector(".card__title");
   const cardImage = cardElement.querySelector(".card__image");
@@ -11,13 +21,24 @@ export function createCard(cardsItem, cardDelete, showZoomImage) {
   cardImage.alt = `Изображение ${cardsItem.name}`;
 
   const deleteButton = cardElement.querySelector(".card__delete-button");
+  if (cardsItem.owner._id === userId) {
+    deleteButton.classList.remove("hidden");
+  } else {
+    deleteButton.classList.add("hidden");
+  }
+
+  const id = cardElement.dataset.cardId;
   deleteButton.addEventListener("click", () => {
-    cardDelete(cardElement);
+    cardDelete(cardElement, id);
   });
 
   const likeButton = cardElement.querySelector(".card__like-button");
+  const likeCountElement = cardElement.querySelector(".like_count");
+
+  likeCountElement.textContent = cardsItem.likes.length;
+
   likeButton.addEventListener("click", () => {
-    likeButton.classList.toggle("card__like-button_is-active");
+    showlikeCard(id, likeButton, likeCountElement);
   });
 
   cardImage.addEventListener("click", () => {
@@ -27,6 +48,12 @@ export function createCard(cardsItem, cardDelete, showZoomImage) {
   return cardElement;
 }
 
-export function cardDelete(cardElement) {
-  cardElement.remove();
+export function cardDelete(cardElement, id) {
+  deleteCard(id)
+    .then(() => {
+      cardElement.remove();
+    })
+    .catch((err) => {
+      console.error(err);
+    });
 }
